@@ -8,14 +8,14 @@ jobs:
   tick:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 24 }
       - run: npm ci
       - run: |
           for i in 1 2 3 4 5; do
             npx tgcloud run endpoints/tick "{ channel: '$CHANNEL' }" || true
-            [ $i -lt 5 ] && sleep 55
+            [ $i -eq 5 ] || sleep 55
           done
         env:
           TGCLOUD_TOKEN: ${{ secrets.TGCLOUD_TOKEN }}
