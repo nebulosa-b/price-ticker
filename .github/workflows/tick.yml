@@ -11,7 +11,8 @@ jobs:
       - uses: actions/setup-node@v5
         with: { node-version: 24 }
       - run: npm ci
-      - run: npx tgcloud run endpoints/tick "{ channel: '$CHANNEL' }"
+      - run: |
+          npx tgcloud run endpoints/tick "{ channel: '$CHANNEL' }"
         env:
           TGCLOUD_TOKEN: ${{ secrets.TGCLOUD_TOKEN }}
           CHANNEL: ${{ secrets.CHANNEL }}
