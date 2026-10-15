@@ -1,7 +1,7 @@
 // endpoints/tick.js — posts the current NEAR/USD price to the channel, BTC Price style:
 // 🟢 up / 🔴 down vs the last post, no emoji if unchanged.
-// Serverless has no cron yet, so cron-job.org triggers .github/workflows/tick.yml every minute,
-// which runs `npx tgcloud run endpoints/tick "{ channel: '@yourchannel' }"`.
+// Serverless has no cron yet, so .github/workflows/tick.yml (GitHub cron, every 5 min) calls this 5 times,
+// one per minute: `npx tgcloud run endpoints/tick "{ channel: '@yourchannel' }"`.
 // ponytail: no Mini App is configured, so nothing else can reach this endpoint.
 
 import { api, db, fetch } from 'sdk';
