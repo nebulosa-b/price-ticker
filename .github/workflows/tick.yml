@@ -1,8 +1,7 @@
 name: tick
-on:
-  schedule:
-    - cron: '*/5 * * * *' # GitHub's minimum; each run posts 5 times, one per minute
-  workflow_dispatch:
+# Triggered every minute by cron-job.org via the workflow_dispatch API
+# (GitHub's own cron is limited to 5 min and fires late or not at all).
+on: workflow_dispatch
 concurrency: tick # never two runs at once (no double posts)
 jobs:
   tick:
@@ -12,11 +11,7 @@ jobs:
       - uses: actions/setup-node@v5
         with: { node-version: 24 }
       - run: npm ci
-      - run: |
-          for i in 1 2 3 4 5; do
-            npx tgcloud run endpoints/tick "{ channel: '$CHANNEL' }" || true
-            [ $i -eq 5 ] || sleep 55
-          done
+      - run: npx tgcloud run endpoints/tick "{ channel: '$CHANNEL' }"
         env:
           TGCLOUD_TOKEN: ${{ secrets.TGCLOUD_TOKEN }}
           CHANNEL: ${{ secrets.CHANNEL }}
