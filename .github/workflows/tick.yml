@@ -16,6 +16,7 @@ jobs:
       - run: |
           for i in 1 2 3 4 5; do
             npx tgcloud run endpoints/tick "{ channel: '$CHANNEL' }" || true
+            npx tgcloud run endpoints/tick "{ channel: '@rheausdprices', coin: 'RHEA' }" || true
             [ $i -eq 5 ] || sleep 55
           done
         env:
